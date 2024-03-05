@@ -13,7 +13,9 @@ pipeline{
     }
     stage("Build"){
       steps{
-        sh "sudo chmod g+x src/index.js && docker build -t devops_ws ."
+        script{
+          sh "docker build -t devops_ws ."
+        }
       }
     }
   }
