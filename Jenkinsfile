@@ -16,4 +16,5 @@ pipeline{
         sh "docker build -t devops_ws"
       }
     }
-    
+  }
+}
