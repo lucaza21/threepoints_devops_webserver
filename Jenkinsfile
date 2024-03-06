@@ -6,7 +6,7 @@ pipeline{
         git credentialsId: 'github_user_threepoints', url: 'https://github.com/lucaza21/threepoints_devops_webserver'
       }
     }
-    stage("Pruebas Paralelas"{
+    stage("Pruebas Paralelas"){
       parallel{
         stage("Pruebas SAST"){
           steps{
