@@ -1,4 +1,15 @@
-
+pipeline{
+  agent any
+  stages{
+    stage("Checkout"){
+      steps{
+        git credentialsId: 'github_user_threepoints', url: 'https://github.com/lucaza21/threepoints_devops_webserver'
+      }
+    }
+    stage('Pruebas SAST') {
+        environment {
+            SCANNER_HOME = tool 'SonarScanner'
+            PROJECT_NAME = "sonar"
         }
         steps {
             withSonarQubeEnv(installationName:'Sonarqube', credentialsId: 'jenkins-1') {
@@ -13,7 +24,7 @@
             timeout(time: 1, unit: 'MINUTES') { 
                 waitForQualityGate abortPipeline: false
                 }
-            }
+        }
     }
     stage("Pruebas Paralelas"){
       parallel{
@@ -47,9 +58,9 @@
       steps{
         script{
           sh "docker build -t devops_ws ."
+            }
         }
-      }
     }
-    }
+  }
 }
-          
+                    
