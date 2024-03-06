@@ -25,13 +25,13 @@ pipeline{
                      usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
             sh ''' 
               echo "[credentials]\n" > credentials.txt
-              echo user=${USER} >> credentials.txt
-              echo password={PASSWORD} > credentials.txt
+              echo "user=${USER}" >> credentials.txt
+              echo "password={PASSWORD}" >> credentials.txt
               
               cat credentials.txt
             '''        
           }
-         archiveArtifacts artifacts: 'credentials.ini', onlyIfSuccessful: true
+         archiveArtifacts artifacts: 'credentials.txt', onlyIfSuccessful: true
       }
       
     }
