@@ -24,9 +24,9 @@ pipeline{
         steps { withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints',
                      usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
             
-              echo "[credentials]\n" > credentials.txt
-              echo "user=${USER}\n" >> credentials.txt
-              echo "password=${PASSWORD}\n" >> credentials.txt
+              sh "echo [credentials]\n" > credentials.txt
+              sh "echo user=$USER\n" >> credentials.txt
+              sh "echo password=$PASSWORD\n" >> credentials.txt
               cat credentials.txt
                  
           }
