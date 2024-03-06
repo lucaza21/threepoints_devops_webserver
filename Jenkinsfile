@@ -25,9 +25,8 @@ pipeline{
                      usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
     //available as an env variable, but will be masked if you try to print it out any which way
     sh 'echo $PASSWORD'
-    touch credentials.txt
-    echo "${env.USERNAME}" > credetials.txt
-    echo "${env.PASSWORD}" >> credetials.txt
+    echo "${env.USERNAME}"
+    echo "${env.PASSWORD}"
 }
         }
     }
