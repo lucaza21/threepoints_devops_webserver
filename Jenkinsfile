@@ -25,7 +25,7 @@ pipeline{
         PROJECT_NAME = "lucaza21_jenkins-pipeline-as-code"
       }
       steps {
-        withSonarQubeEnv(credentialsId: 'jenkins-1') {
+        withSonarQubeEnv('Sonarqube', credentialsId: 'jenkins-1') {
             sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
             -Dsonar.java.binaries=build/classes/java/ \
             -Dsonar.projectKey=$PROJECT_NAME \
