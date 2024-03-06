@@ -22,10 +22,13 @@ pipeline{
     }
     stage("Configurar archivo") {
         steps { withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints',
-                     usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                     usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
     //available as an env variable, but will be masked if you try to print it out any which way
     sh 'echo $PASSWORD'
     echo "${env.USERNAME}"
+    echo "[credentials\n" > credentials.ini
+    echo "user=${USER}\n" >> credentials.ini
+    echo "password=${PASSWORD}" >> credentials.ini
 }
         }
     }
