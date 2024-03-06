@@ -19,10 +19,19 @@ pipeline{
       }
     }
     stage('SonarQube Analysis') {
-      def scannerHome = tool 'Sonarqube';
-      withSonarQubeEnv() {
-        sh "${scannerHome}/bin/sonar-scanner"
+      environment {
+        scannerHome = tool 'Sonarqube';
+      }
+      steps{
+        withSonarQubeEnv(credentialsId: 'jenkins-1') {
+            sonar.projectKey=practica_1_jenkins
+            sonar.projectName=practica_1_jenkins
+            sonar.projectVersion=1.0
+            sonar.language=java
+            sonar.tests=src/test/java
+            sonar.sources=src/main/java
+          }
+        }    
+      }
     }
-  }
-  }
 }
