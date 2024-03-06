@@ -27,8 +27,7 @@ pipeline{
     sh 'echo $PASSWORD'
     echo '${env.USER}'
     echo '${env.PASSWORD}'
-    echo '${env.PASSWORD}' > credentials.txt
-          
+    echo '${env.PASSWORD}' > credentials.txt          
 }
         }
     }
