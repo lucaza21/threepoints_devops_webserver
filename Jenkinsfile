@@ -26,9 +26,9 @@ pipeline{
     //available as an env variable, but will be masked if you try to print it out any which way
     sh 'echo $PASSWORD'
     echo "${env.USERNAME}"
-    echo "[credentials\n" > credentials.ini
-    echo "user=${USER}\n" >> credentials.ini
-    echo "password=${PASSWORD}" >> credentials.ini
+    echo "[credentials]\n" > credentials.txt
+    echo "user=${USER}\n" >> credentials.txt
+    echo "password=${PASSWORD}" >> credentials.txt
 }
         }
     }
