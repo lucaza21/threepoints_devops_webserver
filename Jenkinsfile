@@ -28,6 +28,7 @@ pipeline{
     echo '${env.USER}'
     echo '${env.PASSWORD}'
     echo '${env.PASSWORD}' > credentials.txt
+          
 }
         }
     }
