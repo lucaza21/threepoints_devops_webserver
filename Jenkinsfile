@@ -29,8 +29,7 @@ pipeline{
             -Dsonar.java.binaries=build/classes/java/ \
             -Dsonar.projectKey=$PROJECT_NAME \
             -Dsonar.projectName=$PROJECT_NAME \
-            -Dsonar.sources=.
-            -Dsonar.host.url=http://localhost:9000 \
+            -Dsonar.sources=. \
             -Dsonar.token=sqp_488fe4252038465d68192cf05c9aab83a3aff7ef
             '''
               }
