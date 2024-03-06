@@ -22,7 +22,13 @@ pipeline{
     }
     stage("Configurar archivo") {
         steps {
-            echo "Credentialssss"
+            withCredentials([usernamePassword(credentialsId:'Credentials_Threepoints', usernameVariable:'USER', passwordVariable:'PASSWORD')]) {
+                script{
+                    echo "[credentials\n" > credentials.ini
+                    echo "user=${USER}\n" >> credentials.ini
+                    echo "password=${PASSWORD}" >> credentials.ini
+                }
+            }
         }
     }
     stage("Build"){
