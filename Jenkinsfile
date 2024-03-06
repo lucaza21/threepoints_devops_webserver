@@ -31,8 +31,7 @@ pipeline{
             -Dsonar.projectName=$PROJECT_NAME \
             -Dsonar.sources=.
             -Dsonar.host.url=http://localhost:9000 \
-            -Dsonar.token=sqp_ce99c8170361f5bc4ec88a1ebc799f05c1e859a8
-          '''
+            -Dsonar.token=sqp_488fe4252038465d68192cf05c9aab83a3aff7ef
               }
           }
       }
