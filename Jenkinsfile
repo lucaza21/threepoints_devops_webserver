@@ -23,12 +23,12 @@ pipeline{
     stage("Configurar archivo") {
         steps { withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints',
                      usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
-            sh ''' 
+            
               echo "[credentials]\n" > credentials.txt
-              echo user=${USER} \n >> credentials.txt
-              echo password=${PASSWORD} \n >> credentials.txt
+              echo "user=${USER}\n" >> credentials.txt
+              echo "password=${PASSWORD}" \n >> credentials.txt
               cat credentials.txt
-            '''        
+                 
           }
          archiveArtifacts artifacts: 'credentials.txt', onlyIfSuccessful: true
       }
