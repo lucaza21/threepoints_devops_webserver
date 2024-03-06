@@ -18,19 +18,20 @@ pipeline{
         }
       }
     }
-    stage('SonarQube Analysis') {
+    stage('SonarCloud') {
       environment {
-        scannerHome = tool 'Sonarqube';
+        SCANNER_HOME = tool 'Sonarqube'
+        ORGANIZATION = "lucaza21-github"
+        PROJECT_NAME = "lucaza21_jenkins-pipeline-as-code"
       }
-      steps{
+      steps {
         withSonarQubeEnv(credentialsId: 'jenkins-1') {
-             sh '''sonar-scanner \
-            -Dsonar.projectKey=sonar \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=http://localhost:9000 \
-            -Dsonar.token=sqp_ce99c8170361f5bc4ec88a1ebc799f05c1e859a8 '''
+            sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+            -Dsonar.java.binaries=build/classes/java/ \
+            -Dsonar.projectKey=$PROJECT_NAME \
+            -Dsonar.sources=.'''
+              }
           }
-        }    
       }
     }
 }
