@@ -22,7 +22,7 @@ pipeline{
       environment {
         SCANNER_HOME = tool 'SonarScanner'
         ORGANIZATION = "lucaza21-github"
-        PROJECT_NAME = "lucaza21_jenkins-pipeline-as-code"
+        PROJECT_NAME = "sonar"
       }
       steps {
         withSonarQubeEnv(installationName:'Sonarqube', credentialsId: 'jenkins-1') {
