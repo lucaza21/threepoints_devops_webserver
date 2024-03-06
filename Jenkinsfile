@@ -47,16 +47,19 @@ pipeline{
         PROJECT_NAME = "sonar"
       }
       steps {
-        withSonarQubeEnv(installationName:'Sonarqube', credentialsId: 'jenkins-1') {
-            sh '''$SCANNER_HOME/bin/sonar-scanner \
-            -Dsonar.java.binaries=build/classes/java/ \
-            -Dsonar.projectKey=$PROJECT_NAME \
-            -Dsonar.projectName=$PROJECT_NAME \
-            -Dsonar.sources=. \
-            -Dsonar.token=sqp_488fe4252038465d68192cf05c9aab83a3aff7ef
-            '''
-              }
-          }
-      }
+            withSonarQubeEnv(installationName:'Sonarqube', credentialsId: 'jenkins-1') {
+                sh '''$SCANNER_HOME/bin/sonar-scanner \
+                -Dsonar.java.binaries=build/classes/java/ \
+                -Dsonar.projectKey=$PROJECT_NAME \
+                -Dsonar.projectName=$PROJECT_NAME \
+                -Dsonar.sources=. \
+                -Dsonar.token=sqp_488fe4252038465d68192cf05c9aab83a3aff7ef
+                '''
+                }
+            timeout(time: 1, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+                }
+            }
+        }
     }
 }
