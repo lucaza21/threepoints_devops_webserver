@@ -24,12 +24,11 @@ pipeline{
       }
       steps{
         withSonarQubeEnv(credentialsId: 'jenkins-1') {
-            sonar.projectKey=practica_1_jenkins
-            sonar.projectName=practica_1_jenkins
-            sonar.projectVersion=1.0
-            sonar.language=java
-            sonar.tests=src/test/java
-            sonar.sources=src/main/java
+             sh '''sonar-scanner \
+            -Dsonar.projectKey=sonar \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=http://localhost:9000 \
+            -Dsonar.token=sqp_ce99c8170361f5bc4ec88a1ebc799f05c1e859a8 '''
           }
         }    
       }
