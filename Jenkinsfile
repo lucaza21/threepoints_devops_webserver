@@ -24,9 +24,11 @@ pipeline{
         steps { withCredentials([usernamePassword(credentialsId: 'Credentials_Threepoints',
                      usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
     //available as an env variable, but will be masked if you try to print it out any which way
-    sh 'echo ${env.PASSWORD} > credentials.txt'
-    sh 'echo ${USER} >> credentials.txt'
-    sh 'cat credentials.txt'        
+    sh ''' 
+      echo ${PASSWORD} > credentials.txt
+      echo ${USER} >> credentials.txt
+      cat credentials.txt
+    '''        
 }
         }
     }
