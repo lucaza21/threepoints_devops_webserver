@@ -6,9 +6,18 @@ pipeline{
         git credentialsId: 'github_user_threepoints', url: 'https://github.com/lucaza21/threepoints_devops_webserver'
       }
     }
-    stage("Pruebas SAST"){
-      steps{
-        echo "Ejecucion de pruebas SAST"
+    stage("Pruebas Paralelas"{
+      parallel{
+        stage("Pruebas SAST"){
+          steps{
+            echo "Ejecucion de pruebas SAST"
+            }  
+          }
+        stage("Imprimir Env"){
+          steps{
+            echo "El Workspace es: ${WORKSPACE}"
+            }  
+          }
       }
     }
     stage("Build"){
