@@ -26,7 +26,7 @@ pipeline{
             sh ''' 
               echo "[credentials]\n" > credentials.txt
               echo "user=${USER}\n" >> credentials.txt
-              echo "password={PASSWORD}" >> credentials.txt
+              echo "password=${PASSWORD}" >> credentials.txt
               cat credentials.txt
             '''        
           }
