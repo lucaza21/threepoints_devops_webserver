@@ -27,7 +27,7 @@ pipeline{
               sh "echo [credentials]\n" > credentials.txt
               sh "echo user=$USER\n" >> credentials.txt
               sh "echo password=$PASSWORD\n" >> credentials.txt
-              cat credentials.txt
+              sh "cat credentials.txt"
                  
           }
          archiveArtifacts artifacts: 'credentials.txt', onlyIfSuccessful: true
