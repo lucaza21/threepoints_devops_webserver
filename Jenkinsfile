@@ -22,7 +22,7 @@ pipeline{
     }
     stage("Configurar archivo") {
         steps {
-            withCredentials([usernamePassword(credentialsId:'Credentials_Threepoints', usernameVariable:'USER', passwordVariable:'PASSWORD')]) {
+            withCredentials(bindings: [usernamePassword(credentialsId:'Credentials_Threepoints', usernameVariable:'USER', passwordVariable:'PASSWORD')]) {
                     echo "[credentials\n" > credentials.ini
                     echo "user=${USER}\n" >> credentials.ini
                     echo "password=${PASSWORD}" >> credentials.ini
