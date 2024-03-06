@@ -20,7 +20,7 @@ pipeline{
     }
     stage('SonarCloud') {
       environment {
-        SCANNER_HOME = tool 'SonarCloudOne'
+        SCANNER_HOME = tool 'Sonarqube'
         ORGANIZATION = "lucaza21-github"
         PROJECT_NAME = "lucaza21_jenkins-pipeline-as-code"
       }
