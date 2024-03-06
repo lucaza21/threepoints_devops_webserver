@@ -32,6 +32,7 @@ pipeline{
             -Dsonar.sources=.
             -Dsonar.host.url=http://localhost:9000 \
             -Dsonar.token=sqp_488fe4252038465d68192cf05c9aab83a3aff7ef
+            '''
               }
           }
       }
