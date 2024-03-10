@@ -29,7 +29,7 @@ jobs:
 
             - name: Condición de rama
               run: |
-                  if [[ $GITHUB_REF == ^(refs/heads/(master|feature.*|hotfix.*))$ ]]; then
+                if [[ $GITHUB_REF =~ ^(refs/heads/(master|feature.*|hotfix.*))$ ]]; then
                       echo "productive branch ${{ github.ref_name }}"
                       exit 1
                   fi
