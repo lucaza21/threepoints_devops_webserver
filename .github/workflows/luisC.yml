@@ -45,7 +45,6 @@ jobs:
           else
             echo "El archivo 'allow_pull_request.txt' no existe. Impidiendo Pull Request."
             echo "allow_pull=false" >> $GITHUB_OUTPUT
-            exit 1
           fi
       - name: Guardar allow_pull_request.txt como artefacto
         if: ${{ always() }}
