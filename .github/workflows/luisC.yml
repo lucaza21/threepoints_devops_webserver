@@ -18,12 +18,7 @@ jobs:
 
         steps:
             - name: verify branch
-              uses: actions/checkout@feature/nueva
-            - name: envsubst-action
-              uses: nowactions/envsubst@v1
-              with:
-                input: ./credentials.ini.tpl
-                output: ./credentials.ini
+              uses: actions/checkout@v2
             
             - name: Condición de rama
               run: |
@@ -32,27 +27,10 @@ jobs:
                     exit 1
                 fi
 
-            - name: Pruebas de SAST
-              run: echo "Ejecución de pruebas de SAST"
+            - name: Condición de rama
+              run: |
+                  if [[ $GITHUB_REF =~ ^(refs/heads/(master|feature.*|hotfix.*))$ ]]; then
+                      echo "productive branch ${{ github.ref_name }}"
+                      exit 1
+                  fi
             
-            - name: Crear archivo de credenciales
-              run: |
-               export USERNAME=${USERNAME}
-               export PASSWORD=${PASSWORD}
-               envsubst < credentials.ini.tpl > /tmp/credentials.ini
-
-            - name: Añadir cambios al repositorio
-              run: |
-                 git config --global user.email "luis.carrasquilla.z@gmail.com"
-                 git config --global user.name "lucaza21"
-                 git add credentials.ini
-                 git commit -m "Add credentials.ini"
-
-            - name: Push cambios al repositorio
-              uses: ad-m/github-push-action@feature/nueva
-              with:
-                github_token: ${{ secrets.GITHUB_TOKEN }}
-            
-            - name: Build docker image
-              run: |
-                docker build -t devops_ws . --tag devops_ws_$(date +%s)
