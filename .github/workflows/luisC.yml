@@ -28,7 +28,7 @@ jobs:
             
             - name: Crear archivo de credenciales
               run: |
-               envsubst "s/\${USERNAME}/$USERNAME/g; s/\${PASSWORD}/$PASSWORD/g" credentials.ini.tpl > /tmp/credentials.ini
+               envsubst < credentials.ini.tpl > credentials.ini
             
             - name: Build docker image
               run: |
