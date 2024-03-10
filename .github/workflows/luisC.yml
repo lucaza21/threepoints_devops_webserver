@@ -15,13 +15,21 @@ jobs:
             PASSWORD: ${{ secrets.PASSWORD }}
 
         steps:
-          - name: Pruebas de SAST
-            run: echo "Ejecución de pruebas de SAST"
+            - name: verify branch
+              uses: actions/checkout@v2
+            - name: envsubst-action
+              uses: nowactions/envsubst@v1
+              with:
+                input: ./credentials.ini.tpl
+                output: ./credentials.ini
+
+            - name: Pruebas de SAST
+              run: echo "Ejecución de pruebas de SAST"
             
-          - name: Crear archivo de credenciales
-            run: |
+            - name: Crear archivo de credenciales
+              run: |
                sed "s/\${USERNAME}/$USERNAME/g; s/\${PASSWORD}/$PASSWORD/g" credentials.ini.tpl > credentials.ini
             
-          - name: Build docker image
-            run: |
+            - name: Build docker image
+              run: |
                 docker build -t devops_ws . --tag devops_ws_$(date +%s)
