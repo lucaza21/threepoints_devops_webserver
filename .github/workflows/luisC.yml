@@ -63,7 +63,7 @@ jobs:
     needs: analysis
     steps:
       - name: Permitir build si allow_pull es True
-        if: ${{ steps.stepid.outputs.count }} == 'true'
+        if: ${{ steps.stepid.outputs.allow_pull }} == 'true'
         run: echo "Permitiendo Pull Request"
 
   prevent_build:
@@ -71,7 +71,7 @@ jobs:
     needs: analysis
     steps:
       - name: Impedir build si allow_pull es False
-        if: ${{ steps.stepid.outputs.count }} == 'false'
+        if: ${{ steps.stepid.outputs.allow_pull}} == 'false'
         run: |
           echo "Build fallida. Impidiendo Pull Request"
           exit 1
