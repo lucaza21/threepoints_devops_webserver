@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
         run:
-          working-directory: ./
+          working-directory: ~/
     steps:
 
       - name: Analizar el código
@@ -34,11 +34,11 @@ jobs:
         id: check_files
         uses: andstor/file-existence-action@v3
         with:
-          files: "/tmp/README.md"
+          files: "~/README.md"
   
       - name: File exists
         run: |
-            if [ -f "/tmp/README.md" ]; then
+            if [ -f "~/README.md" ]; then
                 echo "El archivo README.md existe en el directorio raíz."
             else
                 echo "El archivo README.md no existe en el directorio raíz."
