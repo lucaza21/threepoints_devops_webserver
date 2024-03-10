@@ -1,26 +1,46 @@
 name: pull-request-analysis-<Luis-Carrasquilla>
 
 on:
+  push:
+    branches:
+        - master
+        - feature**
   pull_request:
     branches:
       - master
-
-jobs:
+      - feature**
+jobs:   
   analysis:
     runs-on: ubuntu-latest
-
     steps:
       - name: Analizar el código
         run: echo "Realizando análisis de SAST"
-
+      - name: Verificar archivos en el directorio
+        run: |
+          pwd
+          ls -la
+      - name: Verificar la rama actual
+        run: |
+          echo "La rama actual es: ${{ github.ref_name }}"
+      - name: Check file existence
+        id: check_files
+        uses: andstor/file-existence-action@v3
+        with:
+          files: "allow_pull_request.txt"
+  
+      - name: File exists
+        if: steps.check_files.outputs.files_exists == 'true'
+        # Only runs if all of the files exists
+        run: echo All files exists!
+        
       - name: Comprobar cumplimiento de requisitos
         id: check_requirements
         run: |
           if [ -f "allow_pull_request.txt" ]; then
-            echo "El archivo 'allow_pull_request.txt' existe. Permitiendo Pull Request."
+            echo "El archivo 'allow_pull_request.txt' existe. Permitiendo Pull Request. True"
             echo "::set-output name=allow_pull::true"
           else
-            echo "El archivo 'allow_pull_request.txt' no existe. Impidiendo Pull Request."
+            echo "El archivo 'allow_pull_request.txt' no existe. Impidiendo Pull Request. False"
             echo "::set-output name=allow_pull::false"
             exit 1
           fi
@@ -31,29 +51,22 @@ jobs:
           name: allow_pull_request
           path: allow_pull_request.txt
 
-
   allow_build:
     runs-on: ubuntu-latest
-
     needs: analysis
-
     steps:
       - name: Permitir build si allow_pull es True
         if: ${{ needs.analysis.outputs.allow_pull == 'true' }}
         run: echo "Permitiendo Pull Request"
-
   prevent_build:
     runs-on: ubuntu-latest
-
     needs: analysis
-
     steps:
       - name: Impedir build si allow_pull es False
         if: ${{ needs.analysis.outputs.allow_pull == 'false' }}
         run: |
           echo "Build fallida. Impidiendo Pull Request"
           exit 1
-
 
                         
 
