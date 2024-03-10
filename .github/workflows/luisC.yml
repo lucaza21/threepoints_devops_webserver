@@ -66,26 +66,17 @@ jobs:
           echo "Permitiendo Pull Request"
           echo ${{ needs.analysis.outputs.output1 }}
 
-      - name: verificar
-        env:
-          OUTPUT1: ${{needs.analysis.outputs.output1}}
-        run: echo "$OUTPUT1"
-
   prevent_build:
     runs-on: ubuntu-latest
     needs: analysis
     steps:
       - name: Impedir build si allow_pull es False 
+        if: ${{ needs.analysis.outputs.output1 == 'false' }}
         run: |
-            if [ ${{ needs.analysis.outputs.output1 == 'false'}}  ]; then
-            echo "Build fallida. Impidiendo Pull Request"
-            echo ${{needs.analysis.outputs.output1 }}
-            fi 
+          echo "Permitiendo Pull Request"
+          echo ${{ needs.analysis.outputs.output1 }}
       
-      - name: verificar
-        env:
-          OUTPUT1: ${{needs.analysis.outputs.output1}}
-        run: echo "$OUTPUT1"
+
         
                         
 
