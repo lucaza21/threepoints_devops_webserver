@@ -17,29 +17,27 @@ jobs:
         uses: actions/checkout@v4
         with:
             sparse-checkout: .
+        
+          run: |
+            git checkout -b new_branch
+            echo "some test file" > test
+            git add test
+            git commit -S -m "Adding a test file to new_branch"
+            git push -u origin new_branch
 
       - name: Analizar el código
         run: |
             echo "Realizando análisis de SAST"
-            echo ${{ github.repository }}
-
-  
-      - name: Comprobar si existe el archivo
-        run: |
-            if [ -f "allow_pull_request.txt" ]; then
-                echo "El archivo allow_pull_request.txt existe en el directorio raíz."
-            else
-                echo "El archivo allow_pull_request.txt no existe en el directorio raíz."
-            fi
         
       - name: Comprobar cumplimiento de requisitos
         id: check_requirements
         run: |
+          echo estamos en: ${{ github.repository }}
           if [ -f "allow_pull_request.txt" ]; then
-            echo "El archivo 'allow_pull_request.txt' existe. Permitiendo Pull Request. True"
+            echo "El archivo 'allow_pull_request.txt' existe. Permitiendo Pull Request."
             echo "::set-output name=allow_pull::true"
           else
-            echo "El archivo 'allow_pull_request.txt' no existe. Impidiendo Pull Request. False"
+            echo "El archivo 'allow_pull_request.txt' no existe. Impidiendo Pull Request."
             echo "::set-output name=allow_pull::false"
             exit 1
           fi
