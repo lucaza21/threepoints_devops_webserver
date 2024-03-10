@@ -15,18 +15,16 @@ jobs:
     steps:
       - name: Analizar el código
         run: echo "Realizando análisis de SAST"
-      - name: Verificar archivos en el directorio
-        run: |
-          pwd
-          ls -la
+
       - name: Verificar la rama actual
         run: |
           echo "La rama actual es: ${{ github.ref_name }}"
+
       - name: Check file existence
         id: check_files
         uses: andstor/file-existence-action@v3
         with:
-          files: "allow_pull_request.txt"
+          files: "./allow_pull_request.txt"
   
       - name: File exists
         if: steps.check_files.outputs.files_exists == 'true'
