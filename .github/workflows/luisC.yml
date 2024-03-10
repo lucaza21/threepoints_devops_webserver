@@ -12,9 +12,6 @@ on:
 jobs:   
   analysis:
     runs-on: ubuntu-latest
-    defaults:
-        run:
-          working-directory: $GITHUB_PATH
     steps:
 
       - name: Analizar el código
