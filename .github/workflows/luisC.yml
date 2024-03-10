@@ -3,8 +3,8 @@ name: pull-request-analysis-<Luis-Carrasquilla>
 on:
   push:
     branches:
-        - master
-        - feature**
+      - master
+      - feature**
   pull_request:
     branches:
       - master
