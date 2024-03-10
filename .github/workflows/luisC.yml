@@ -18,6 +18,11 @@ jobs:
         with:
             sparse-checkout: .
         
+      - name: Usando Github Token
+        uses: ad-m/github-push-action@master
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+        
       - name: Creando una nueva rama
         run: |
             git config --global commit.gpgsign false
@@ -30,14 +35,17 @@ jobs:
             git commit -n -m "Adding a test file to new_branch"
             git push -u origin new_branch
 
-      - name: Abrir un Pull Request
-        uses: peter-evans/create-pull-request@v3
+      - name: Abrir un Pull Request - Update AUTHORS
+        run: |
+          git log --format='%aN <%aE>%n%cN <%cE>' | sort -u > AUTHORS
+          
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
         with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            commit-message: "Adding a test file to new_branch"
-            title: "Pull Request para cambios en new_branch"
-            body: "Se han realizado cambios en la rama new_branch. Por favor, revisar y fusiona si es apropiado."
-            branch: new_branch
+          commit-message: update authors
+          title: Update AUTHORS
+          body: Credit new contributors by updating AUTHORS
+          branch: update-authors
 
       - name: Analizar el código
         run: |
