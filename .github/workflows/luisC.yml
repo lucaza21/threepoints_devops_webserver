@@ -17,7 +17,7 @@ jobs:
       - name: Analizar el código
         run: |
             echo "Realizando análisis de SAST"
-            echo ${{github.path}}
+            echo ${{github.workspace}}
 
     
       - name: Añadir cambios al repositorio
