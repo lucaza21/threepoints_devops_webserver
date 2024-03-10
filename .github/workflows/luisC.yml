@@ -40,7 +40,7 @@ jobs:
             echo "Realizando análisis de SAST"
         
       - name: Comprobar cumplimiento de requisitos
-        id: check_requirements
+        id: analysis
         run: |
           echo estamos en: ${{ github.repository }}
           if [ -f "allow_pull_request.txt" ]; then
