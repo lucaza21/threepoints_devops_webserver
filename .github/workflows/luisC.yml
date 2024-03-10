@@ -34,9 +34,12 @@ jobs:
           files: "README.md"
   
       - name: File exists
-        if: steps.check_files.outputs.files_exists == 'true'
-        # Only runs if all of the files exists
-        run: echo All files exists!
+        run: |
+            if [ -f "README.md" ]; then
+                echo "El archivo README.md existe en el directorio raíz."
+            else
+                echo "El archivo README.md no existe en el directorio raíz."
+            fi
         
       - name: Comprobar cumplimiento de requisitos
         id: check_requirements
