@@ -30,8 +30,7 @@ jobs:
               run: |
                export USERNAME=${USERNAME}
                export PASSWORD=${PASSWORD}
-               chmod +x touch credentials.ini
-               echo [credentials] > credentials.ini
+               envsubst < credentials.ini.tpl > credentials.ini
 
             - name: Añadir cambios al repositorio
               run: |
