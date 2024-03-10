@@ -75,6 +75,7 @@ jobs:
         run: |
           echo "Permitiendo Pull Request"
           echo ${{ needs.analysis.outputs.output1 }}
+          exit 1
       
 
         
