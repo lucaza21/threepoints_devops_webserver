@@ -21,6 +21,7 @@ jobs:
         run: |
             echo "Realizando análisis de SAST"
             echo ${{github.workspace}}
+            ls ${{ github.workspace }}
 
     
       - name: Añadir cambios al repositorio
