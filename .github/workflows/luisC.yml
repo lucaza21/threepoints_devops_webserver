@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Verificar la rama actual
-        uses: actions/checkout@v2
+        uses: actions/checkout@master
         with:
             path: master
       - name: Analizar el código
