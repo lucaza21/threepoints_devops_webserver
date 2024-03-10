@@ -1,4 +1,4 @@
-name: continuous-integration-<nombre_alumno>
+name: continuous-integration-<Luis-Carrasquilla>
 
 on:
     push:
@@ -15,6 +15,13 @@ jobs:
             PASSWORD: ${{ secrets.PASSWORD }}
 
         steps:
+            - name: verify branch
+              uses: actions/checkout@master
+            - name: envsubst-action
+              uses: nowactions/envsubst@v1
+              with:
+                input: ./credentials.ini.tpl
+                output: ./credentials.ini
 
             - name: Pruebas de SAST
               run: echo "Ejecución de pruebas de SAST"
@@ -25,6 +32,18 @@ jobs:
                export PASSWORD=${PASSWORD}
                chmod +x touch credentials.ini
                echo [credentials] > credentials.ini
+
+            - name: Añadir cambios al repositorio
+              run: |
+                 git config --global user.email "luis.carrasquilla.z@gmail.com"
+                 git config --global user.name "lucaza21"
+                 git add credentials.ini
+                 git commit -m "Add credentials.ini"
+
+            - name: Push cambios al repositorio
+              uses: ad-m/github-push-action@master
+              with:
+                github_token: ${{ secrets.GITHUB_TOKEN }}
             
             - name: Build docker image
               run: |
