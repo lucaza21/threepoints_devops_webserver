@@ -18,11 +18,6 @@ jobs:
         with:
             sparse-checkout: .
         
-      - name: Usando Github Token
-        uses: ad-m/github-push-action@master
-        with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-        
       - name: Creando una nueva rama
         run: |
             git config --global commit.gpgsign false
@@ -34,7 +29,7 @@ jobs:
             git add test
             git commit -n -m "Adding a test file to new_branch"
             git push -u origin new_branch
-            
+
       - name: Abrir un Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
