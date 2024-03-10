@@ -40,7 +40,7 @@ jobs:
       - name: File exists
         run: |
             if [ -f "README.md" ]; then
-                echo "El archivo README.md existe en el directorio raíz."
+                echo "El archivo README.md existe en el directorio raízzzzzzzzzzzzzzzzzzzzz."
             else
                 echo "El archivo README.md no existe en el directorio raíz."
             fi
