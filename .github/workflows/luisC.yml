@@ -18,7 +18,7 @@ jobs:
         with:
             sparse-checkout: .
         
-          run: |
+      - run: |
             git checkout -b new_branch
             echo "some test file" > test
             git add test
