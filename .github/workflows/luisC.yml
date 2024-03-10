@@ -11,16 +11,16 @@ jobs:
 
     steps:
       - name: Analizar el código
-        run: echo "Realizando análisis de SAST"
+        run: echo "Realizando análisis de SAST "
 
       - name: Comprobar cumplimiento de requisitos
         id: check_requirements
         run: |
           if [ -f "allow_pull_request.txt" ]; then
-            echo "El archivo 'allow_pull_request.txt' existe. Permitiendo Pull Request."
+            echo "El archivo 'allow_pull_request.txt' existe. Permitiendo Pull Request. True"
             echo "::set-output name=allow_pull::true"
           else
-            echo "El archivo 'allow_pull_request.txt' no existe. Impidiendo Pull Request."
+            echo "El archivo 'allow_pull_request.txt' no existe. Impidiendo Pull Request. False"
             echo "::set-output name=allow_pull::false"
             exit 1
           fi
