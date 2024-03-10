@@ -16,12 +16,12 @@ jobs:
       - name: Verificar la rama actual
         uses: actions/checkout@v4
         with:
-            path: master
+            sparse-checkout: .
+
       - name: Analizar el código
         run: |
             echo "Realizando análisis de SAST"
             echo ${{ github.repository }}
-            ls ${{ github.repository }}
 
     
       - name: Añadir cambios al repositorio
