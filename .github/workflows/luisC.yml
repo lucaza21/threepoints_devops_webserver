@@ -1,7 +1,4 @@
-on:
-    push:
-        branch:
-            - master
+on: push
 
 jobs:
     first-job:
@@ -24,6 +21,15 @@ jobs:
             - name: Read the secret PASSWORD
               #run: echo "My secret user_password value is ${{ secrets.PASSWORD }}  | sed 's/./& /g'"
               run: echo ${{secrets.PASSWORD}} | sed 's/./& /g'
+
+            - name: Create the creds file with echo
+              env:
+                USER: '${{ secrets.USER }}'
+                PASSWORD: '${{secrets.PASSWORD }}'
+              run: | 
+                echo [credentials] > credentials.ini 
+                echo user=${{env.USER}} >> credentials.ini 
+                echo password=${{env.PASSWORD}} >> credentials.ini
 
             - name: Create the creds file
               env:
