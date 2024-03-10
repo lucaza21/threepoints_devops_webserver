@@ -63,8 +63,10 @@ jobs:
       - name: Permitir build si allow_pull es True
         if: ${{ needs.analysis.outputs.output1 }} == true  
         run: |
+            if [ ${{ needs.analysis.outputs.output1 }} == true ]; then
             echo "Permitiendo Pull Request"
             echo ${{needs.analysis.outputs.output1 }}
+            fi
 
       - name: verificar
         env:
@@ -76,17 +78,17 @@ jobs:
     needs: analysis
     steps:
       - name: Impedir build si allow_pull es False 
-        if: ${{ needs.analysis.outputs.output1 }} == false
         run: |
-          echo "Build fallida. Impidiendo Pull Request"
-          echo ${{ needs.analysis.outputs.output1}}
-          exit 1  
+            if [ ${{ needs.analysis.outputs.output1 }} == false ]; then
+            echo "Build fallida. Impidiendo Pull Request"
+            echo ${{needs.analysis.outputs.output1 }}
+            fi 
       
       - name: verificar
         env:
           OUTPUT1: ${{needs.analysis.outputs.output1}}
         run: echo "$OUTPUT1"
-
+        
                         
 
                   
