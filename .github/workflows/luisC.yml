@@ -61,10 +61,10 @@ jobs:
     needs: analysis
     steps:
       - name: Permitir build si allow_pull es True
-        if: ${{ steps.analysis.outputs.allow_pull == true }} 
+        if: ${{ needs.analysis.outputs.output1 == true }} 
         run: |
             echo "Permitiendo Pull Request"
-            echo "${{ steps.analysis.outputs.allow_pull }}""
+            echo "${{needs.analysis.outputs.output1 }}""
 
       - name: verificar
         env:
