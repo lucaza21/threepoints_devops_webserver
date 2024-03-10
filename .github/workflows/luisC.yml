@@ -22,11 +22,18 @@ jobs:
             
             - name: Condición de rama
               run: |
-                if [[ $GITHUB_REF =~ ^(refs/heads/(master|feature.*|hotfix.*))$ ]]; then
-                  echo "Esta rama está configurada para ejecutarse en el flujo de trabajo."
-                  echo "Not productive branch ${{ github.ref_name }}"
-                else
-                  echo "Esta rama no está configurada para ejecutarse en el flujo de trabajo."
-                  echo "productive branch ${{ github.ref_name }}"
-                  exit 1
+                if [[ ! $GITHUB_REF =~ ^(refs/heads/(master|feature.*|hotfix.*))$ ]]; then
+                    echo "Este flujo de trabajo no está configurado para ejecutarse en la rama actual."
+                    exit 1
                 fi
+
+            - name: Crear nueva rama
+              if: github.ref == 'refs/heads/master'
+              run: |
+                git checkout -b develop
+                git push origin develop
+                echo se ha creado la rama develop
+
+                        
+
+                  
