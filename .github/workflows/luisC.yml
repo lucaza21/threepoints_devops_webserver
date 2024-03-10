@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@master
         with:
           path: master
 
@@ -31,7 +31,7 @@ jobs:
         id: check_files
         uses: andstor/file-existence-action@v3
         with:
-          files: "README.md, *.txt"
+          files: "README.md"
   
       - name: File exists
         if: steps.check_files.outputs.files_exists == 'true'
