@@ -1,43 +1,59 @@
-name: continuous-integration-<Luis-Carrasquilla>
+name: pull-request-analysis-<Luis-Carrasquilla>
 
 on:
-    push:
-        branches:
-        - master
-        - 'feature**'
-        - 'hotfix**'
+  pull_request:
+    branches:
+      - master
 
 jobs:
-    first-job:
-        name: Create file with secrets
-        runs-on: ubuntu-latest
-    
-        env:
-            USERNAME: ${{ secrets.USER }}
-            PASSWORD: ${{ secrets.PASSWORD }}
+  analysis:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: verify branch
-              uses: actions/checkout@master
-            - name: envsubst-action
-              uses: nowactions/envsubst@v1
-              with:
-                input: ./credentials.ini.tpl
-                output: ./credentials.ini
-            
-            - name: Condición de rama
-              run: |
-                if [[ ! $GITHUB_REF =~ ^(refs/heads/(master|feature.*|hotfix.*))$ ]]; then
-                    echo "Este flujo de trabajo no está configurado para ejecutarse en la rama actual."
-                    exit 1
-                fi
+    steps:
+      - name: Analizar el código
+        run: echo "Realizando análisis de SAST"
 
-            - name: Crear nueva rama
-              if: github.ref == 'refs/heads/master'
-              run: |
-                git checkout -b develop
-                git push origin develop
-                echo se ha creado la rama develop
+      - name: Comprobar cumplimiento de requisitos
+        id: check_requirements
+        run: |
+          if [ -f "allow_pull_request.txt" ]; then
+            echo "El archivo 'allow_pull_request.txt' existe. Permitiendo Pull Request."
+            echo "::set-output name=allow_pull::true"
+          else
+            echo "El archivo 'allow_pull_request.txt' no existe. Impidiendo Pull Request."
+            echo "::set-output name=allow_pull::false"
+            exit 1
+          fi
+      - name: Guardar allow_pull_request.txt como artefacto
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: allow_pull_request
+          path: allow_pull_request.txt
+
+
+  allow_build:
+    runs-on: ubuntu-latest
+
+    needs: analysis
+
+    steps:
+      - name: Permitir build si allow_pull es True
+        if: ${{ needs.analysis.outputs.allow_pull == 'true' }}
+        run: echo "Permitiendo Pull Request"
+
+  prevent_build:
+    runs-on: ubuntu-latest
+
+    needs: analysis
+
+    steps:
+      - name: Impedir build si allow_pull es False
+        if: ${{ needs.analysis.outputs.allow_pull == 'false' }}
+        run: |
+          echo "Build fallida. Impidiendo Pull Request"
+          exit 1
+
 
                         
 
