@@ -22,15 +22,15 @@ jobs:
             
             - name: Condición de rama
               run: |
-                if [[ ! $GITHUB_REF =~ ^(refs/heads/(master|feature.*|hotfix.*))$ ]]; then
-                    echo "Este flujo de trabajo no está configurado para ejecutarse en la rama actual."
-                    exit 1
-                fi
-
-            - name: Condición de rama
-              run: |
                 if [[ $GITHUB_REF =~ ^(refs/heads/(master|feature.*|hotfix.*))$ ]]; then
-                      echo "productive branch ${{ github.ref_name }}"
-                      exit 1
-                  fi
+                  echo "Esta rama está configurada para ejecutarse en el flujo de trabajo."
+                  echo "productive branch ${{ github.ref_name }}"
+                else
+                  echo "Esta rama no está configurada para ejecutarse en el flujo de trabajo."
+                  echo "productive branch ${{ github.ref_name }}"
+                  exit 1
+                fi
+          
             
+
+                  
