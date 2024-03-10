@@ -30,7 +30,7 @@ jobs:
               run: |
                export USERNAME=${USERNAME}
                export PASSWORD=${PASSWORD}
-               envsubst < credentials.ini.tpl > credentials.ini
+               sudo envsubst < credentials.ini.tpl > credentials.ini
             
             - name: Build docker image
               run: |
