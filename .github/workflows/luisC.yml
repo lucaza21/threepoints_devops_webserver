@@ -14,14 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Verificar la rama actual
-        uses: actions/checkout@master
+        uses: actions/checkout@v4
         with:
             path: master
       - name: Analizar el código
         run: |
             echo "Realizando análisis de SAST"
-            echo $GITHUB_WORKSPACE
-            ls $GITHUB_WORKSPACE
+            echo ${{ github.repository }}
+            ls ${{ github.repository }}
 
     
       - name: Añadir cambios al repositorio
