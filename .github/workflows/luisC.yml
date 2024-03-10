@@ -1,11 +1,11 @@
 name: continuous-integration-<Luis-Carrasquilla>
-		
+
 on:
     push:
         branches:
         - master
-        - 'feature*'
-        - 'hotfix*'
+        - 'feature**'
+        - 'hotfix**'
 
 jobs:
     first-job:
