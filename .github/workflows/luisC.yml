@@ -13,7 +13,10 @@ jobs:
   analysis:
     runs-on: ubuntu-latest
     steps:
-
+      - name: Verificar la rama actual
+        uses: actions/checkout@v2
+        with:
+            path: master
       - name: Analizar el código
         run: |
             echo "Realizando análisis de SAST"
@@ -26,10 +29,7 @@ jobs:
            git config --global user.email "luis.carrasquilla.z@gmail.com"
            git config --global user.name "lucaza21"
 
-      - name: Verificar la rama actual
-        uses: actions/checkout@v2
-        with:
-            path: master
+     
         
       - name: Check file existence
         id: check_files
