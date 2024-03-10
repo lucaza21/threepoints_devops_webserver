@@ -2,14 +2,14 @@ name: pull-request-analysis-<Luis-Carrasquilla>
 
 on:
   push:
-    paths: ./
+    paths: './'
     branches:
       - master
       - feature**
     
 
   pull_request:
-    paths: ./
+    paths: './'
     branches:
       - master
       - feature**
