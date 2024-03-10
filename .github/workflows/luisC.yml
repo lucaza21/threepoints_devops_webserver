@@ -23,26 +23,13 @@ jobs:
             echo "Realizando análisis de SAST"
             echo ${{ github.repository }}
 
-    
-      - name: Añadir cambios al repositorio
-        run: |
-           git config --global user.email "luis.carrasquilla.z@gmail.com"
-           git config --global user.name "lucaza21"
-
-     
-        
-      - name: Check file existence
-        id: check_files
-        uses: andstor/file-existence-action@v3
-        with:
-          files: "README.md"
   
-      - name: File exists
+      - name: Comprobar si existe el archivo
         run: |
-            if [ -f "README.md" ]; then
-                echo "El archivo README.md existe en el directorio raíz."
+            if [ -f "allow_pull_request.txt" ]; then
+                echo "El archivo allow_pull_request.txt existe en el directorio raíz."
             else
-                echo "El archivo README.md no existe en el directorio raíz."
+                echo "El archivo allow_pull_request.txt no existe en el directorio raíz."
             fi
         
       - name: Comprobar cumplimiento de requisitos
