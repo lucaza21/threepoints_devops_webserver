@@ -5,6 +5,8 @@ on:
     branches:
       - master
       - feature**
+    paths: ./
+
   pull_request:
     branches:
       - master
