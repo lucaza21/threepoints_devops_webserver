@@ -1,39 +1,27 @@
-on: push
+name: continuous-integration-<nombre_alumno>
+
+on:
+    push:
+        branches:
+        - master
 
 jobs:
     first-job:
         name: Create file with secrets
         runs-on: ubuntu-latest
+    
+        env:
+            USERNAME: ${{ secrets.USER }}
+            PASSWORD: ${{ secrets.PASSWORD }}
+
         steps:
-            - name: verify branch
-              uses: actions/checkout@v2
-
-            - name: envsubst-action
-              uses: nowactions/envsubst@v1
-              with:
-                input: ./credentials.ini.tpl
-                output: ./credentials.ini
-        
-            - name: Read the secret USER
-              #run: echo "My secret user_name value is ${{ secrets.USER }}  | sed 's/./& /g'"
-              run: echo ${{secrets.USER }} | sed 's/./& /g'
+          - name: Pruebas de SAST
+            run: echo "Ejecución de pruebas de SAST"
             
-            - name: Read the secret PASSWORD
-              #run: echo "My secret user_password value is ${{ secrets.PASSWORD }}  | sed 's/./& /g'"
-              run: echo ${{secrets.PASSWORD}} | sed 's/./& /g'
-
-            - name: Create the creds file with echo
-              env:
-                USER: '${{ secrets.USER }}'
-                PASSWORD: '${{secrets.PASSWORD }}'
-              run: | 
-                chown -R $USER:$USER /path/to/directory
-                echo [credentials] > credentials.ini 
-                echo user=${{env.USER}} >> credentials.ini 
-                echo password=${{env.PASSWORD}} >> credentials.ini
-
-            - name: Create the creds file
-              env:
-                USER: '${{ secrets.USER }}'
-                PASSWORD: '${{secrets.PASSWORD }}'
-              run: envsubst < credentials.ini.tpl > credentials.ini
+          - name: Crear archivo de credenciales
+            run: |
+               sed "s/\${USERNAME}/$USERNAME/g; s/\${PASSWORD}/$PASSWORD/g" credentials.ini.tpl > credentials.ini
+            
+          - name: Build docker image
+            run: |
+                docker build -t devops_ws . --tag devops_ws_$(date +%s)
