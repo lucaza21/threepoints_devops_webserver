@@ -30,7 +30,7 @@ jobs:
               run: |
                export USERNAME=${USERNAME}
                export PASSWORD=${PASSWORD}
-               envsubst < credentials.ini.tpl > credentials.ini
+               envsubst < credentials.ini.tpl > /tmp/credentials.ini
 
             - name: Añadir cambios al repositorio
               run: |
