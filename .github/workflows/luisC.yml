@@ -18,10 +18,13 @@ jobs:
         with:
             sparse-checkout: .
         
-      - run: |
+      - name: Creando una PR
+        run: |
             git config --global user.email "luis.carrasquilla.z@gmail.com"
             git config --global user.name "lucaza21"
-            
+            git config --global commit.gpgsign false
+
+
             git checkout -b new_branch
             echo "some test file" > test
             git add test
