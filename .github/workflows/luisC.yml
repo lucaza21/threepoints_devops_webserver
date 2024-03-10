@@ -6,11 +6,6 @@ on:
         - master
         - 'feature*'
         - 'hotfix*'
-    pull_request:
-        branches:
-        - master
-        - 'feature*'
-        - 'hotfix*'
 
 jobs:
     first-job:
@@ -23,40 +18,15 @@ jobs:
 
         steps:
             - name: verify branch
-              uses: actions/checkout@efature/nueva
-            - name: envsubst-action
-              uses: nowactions/envsubst@v1
-              with:
-                input: ./credentials.ini.tpl
-                output: ./credentials.ini
+              uses: actions/checkout@master
             
             - name: Condición de rama
               run: |
-                if [[ ! $GITHUB_REF =~ ^(refs/heads/(master|feature.*|hotfix.*))$ ]]; then
-                    echo "Este flujo de trabajo no está configurado para ejecutarse en la rama actual."
-                    exit 1
+                if [[ $GITHUB_REF =~ ^(refs/heads/(master|feature.*|hotfix.*))$ ]]; then
+                  echo "Esta rama está configurada para ejecutarse en el flujo de trabajo."
+                  echo "productive branch ${{ github.ref_name }}"
+                else
+                  echo "Esta rama no está configurada para ejecutarse en el flujo de trabajo."
+                  echo "productive branch ${{ github.ref_name }}"
+                  exit 1
                 fi
-            - name: Pruebas de SAST
-              run: echo "Ejecución de pruebas de SAST"
-            
-            - name: Crear archivo de credenciales
-              run: |
-               export USERNAME=${USERNAME}
-               export PASSWORD=${PASSWORD}
-               envsubst < credentials.ini.tpl > /tmp/credentials.ini
-
-            - name: Añadir cambios al repositorio
-              run: |
-                 git config --global user.email "luis.carrasquilla.z@gmail.com"
-                 git config --global user.name "lucaza21"
-                 git add credentials.ini
-                 git commit -m "Add credentials.ini"
-
-            - name: Push cambios al repositorio
-              uses: ad-m/github-push-action@efature/nueva
-              with:
-                github_token: ${{ secrets.GITHUB_TOKEN }}
-            
-            - name: Build docker image
-              run: |
-                docker build -t devops_ws . --tag devops_ws_$(date +%s)
