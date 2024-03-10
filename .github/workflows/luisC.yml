@@ -1,15 +1,26 @@
 name: pull-request-analysis-<Luis-Carrasquilla>
 
 on:
+  push:
+    branches:
+        - master
+        - feature**
   pull_request:
     branches:
       - master
 
-jobs:
+jobs:   
   analysis:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Crear Pull Request
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -d '{"title": "Nueva característica", "body": "Descripción de la nueva característica", "head": "feature/nueva", "base": "master"}' \
+            https://api.github.com/repos/lucaza21/threepoints_devops_webserver/pulls
+
       - name: Analizar el código
         run: echo "Realizando análisis de SAST "
 
