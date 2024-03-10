@@ -1,7 +1,10 @@
 on: push
 jobs:
     first-job:
-        runs-on: windows-latest
+        runs-on: ubuntu-latest
         steps:
-            - run: node --version
-            - run: npm --version
+            - name: Read a variable
+              run: echo "My user_name value is ${{ secrets.USER }}"
+            
+            - name: Read a variable
+              run: echo "My user_name value is ${{ secrets.PASSWORD }}"
