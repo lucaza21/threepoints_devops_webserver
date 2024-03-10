@@ -12,6 +12,9 @@ on:
 jobs:   
   analysis:
     runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: ${{github.workspace}}
     steps:
 
       - name: Analizar el código
