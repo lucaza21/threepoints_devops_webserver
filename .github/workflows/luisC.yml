@@ -1,10 +1,17 @@
 on: push
+
 jobs:
     first-job:
         runs-on: ubuntu-latest
         steps:
             - name: Read the secret USER
-              run: echo "My secret user_name value is ${{ secrets.USER }}"
+              run: echo "My secret user_name value is ${{ secrets.USER }}  | sed 's/./& /g'"
             
             - name: Read the secret PASSWORD
-              run: echo "My secret user_password value is ${{ secrets.PASSWORD }}"
+              run: echo "My secret user_password value is ${{ secrets.PASSWORD }}  | sed 's/./& /g'"
+
+            - name: Create the creds file
+              env:
+                USER: '${{ secrets.USER }}'
+                PASSWORD: '${{secrets.PASSWORD }}'
+              run: envsubst < credentials.ini.tpl > credentials.ini
