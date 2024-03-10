@@ -36,7 +36,7 @@ jobs:
             token: ${{ secrets.GITHUB_TOKEN }}
             commit-message: "Adding a test file to new_branch"
             title: "Pull Request para cambios en new_branch"
-            body: "Se han realizado cambios en la rama new_branch. Por favor, revisa y fusiona si es apropiado."
+            body: "Se han realizado cambios en la rama new_branch. Por favor, revisar y fusiona si es apropiado."
             branch: new_branch
 
       - name: Analizar el código
