@@ -18,7 +18,7 @@ jobs:
 
         steps:
             - name: verify branch
-              uses: actions/checkout@v2
+              uses: actions/checkout@master
             
             - name: Condición de rama
               run: |
