@@ -73,7 +73,7 @@ jobs:
       - name: Impedir build si allow_pull es False 
         if: ${{ needs.analysis.outputs.output1 == 'false' }}
         run: |
-          echo "Impidiendo Pull Request"
+          echo "Build Fallida. Impidiendo Pull Request"
           echo ${{ needs.analysis.outputs.output1 }}
           exit 1
       
