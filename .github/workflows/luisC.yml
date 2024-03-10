@@ -1,5 +1,4 @@
 name: pull-request-analysis-<Luis-Carrasquilla>
-
 on:
   push:
     branches:
@@ -22,11 +21,9 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Abrir un Pull Request - Update AUTHORS
         run: |
           git log --format='%aN <%aE>%n%cN <%cE>' | sort -u > AUTHORS
-
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
@@ -34,13 +31,12 @@ jobs:
           title: Update AUTHORS
           body: Credit new contributors by updating AUTHORS
           branch: update-authors
-
       - name: Analizar el código
         run: |
             echo "Realizando análisis de SAST"
         
       - name: Comprobar cumplimiento de requisitos
-        id: analysis
+        id: stepid
         run: |
           echo estamos en: ${{ github.repository }}
           if [ -f "allow_pull_request.txt" ]; then
@@ -49,6 +45,7 @@ jobs:
           else
             echo "El archivo 'allow_pull_request.txt' no existe. Impidiendo Pull Request."
             echo "allow_pull=false" >> $GITHUB_OUTPUT
+            exit 1
           fi
       - name: Guardar allow_pull_request.txt como artefacto
         if: ${{ always() }}
@@ -56,24 +53,22 @@ jobs:
         with:
           name: allow_pull_request
           path: allow_pull_request.txt
-
   allow_build:
     runs-on: ubuntu-latest
     needs: analysis
     steps:
       - name: Permitir build si allow_pull es True
-        if: ${{ steps.analysis.outputs.allow_pull == 'true' }}
+        if: ${{ steps.stepid.outputs.allow_pull }} == 'true'
         run: echo "Permitiendo Pull Request"
-        
   prevent_build:
     runs-on: ubuntu-latest
     needs: analysis
     steps:
       - name: Impedir build si allow_pull es False
-        if: ${{ steps.analysis.outputs.allow_pull == 'false' }}
+        if: ${{ steps.stepid.outputs.allow_pull}} == 'false'
         run: |
           echo "Build fallida. Impidiendo Pull Request"
-          exit 1
+          exit 1  
 
                         
 
