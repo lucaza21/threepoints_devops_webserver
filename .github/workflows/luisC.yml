@@ -13,19 +13,22 @@ jobs:
   analysis:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@master
-        with:
-          path: master
 
       - name: Analizar el código
         run: echo "Realizando análisis de SAST"
+    
+      - name: Añadir cambios al repositorio
+        run: |
+           git config --global user.email "luis.carrasquilla.z@gmail.com"
+           git config --global user.name "lucaza21"
 
       - name: Verificar la rama actual
-        
-        run: |
-          echo "La rama actual es: ${{ github.ref_name }}"
-          if [ -f README.md ]; then echo true; else echo false; fi
+        uses: actions/checkout@master
+        with:
+            path: master
+            run: |
+                echo "La rama actual es: ${{ github.ref_name }}"
+                if [ -f README.md ]; then echo true; else echo false; fi
 
       - name: Check file existence
         id: check_files
