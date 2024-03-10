@@ -2,20 +2,19 @@ name: pull-request-analysis-<Luis-Carrasquilla>
 
 on:
   push:
-    paths: './'
     branches:
       - master
       - feature**
-    
-
   pull_request:
-    paths: './'
     branches:
       - master
       - feature**
 jobs:   
   analysis:
     runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: ./
     steps:
 
       - name: Analizar el código
@@ -40,7 +39,7 @@ jobs:
       - name: File exists
         run: |
             if [ -f "README.md" ]; then
-                echo "El archivo README.md existe en el directorio raízzzzzzzzzzzzzzzzzzzzz."
+                echo "El archivo README.md existe en el directorio raíz."
             else
                 echo "El archivo README.md no existe en el directorio raíz."
             fi
