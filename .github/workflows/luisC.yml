@@ -53,8 +53,3 @@ jobs:
         run: |
           echo "Build fallida. Impidiendo Pull Request"
           exit 1
-
-
-                        
-
-                  
