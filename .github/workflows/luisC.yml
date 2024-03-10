@@ -6,6 +6,11 @@ on:
         - master
         - 'feature*'
         - 'hotfix*'
+    pull_request:
+        branches:
+        - master
+        - 'feature*'
+        - 'hotfix*'
 
 jobs:
     first-job:
