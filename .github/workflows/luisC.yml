@@ -3,8 +3,8 @@ jobs:
     first-job:
         runs-on: ubuntu-latest
         steps:
-            - name: Read a variable
-              run: echo "My user_name value is ${{ secrets.USER }}"
+            - name: Read the secret USER
+              run: echo "My secret user_name value is ${{ secrets.USER }}"
             
-            - name: Read a variable
-              run: echo "My user_name value is ${{ secrets.PASSWORD }}"
+            - name: Read the secret PASSWORD
+              run: echo "My secret user_password value is ${{ secrets.PASSWORD }}"
