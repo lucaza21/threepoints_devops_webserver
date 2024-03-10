@@ -14,11 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
         run:
-          working-directory: .
+          working-directory: $GITHUB_PATH
     steps:
 
       - name: Analizar el código
-        run: echo "Realizando análisis de SAST"
+        run: |
+            echo "Realizando análisis de SAST"
+            echo ${{github.path}}
+
     
       - name: Añadir cambios al repositorio
         run: |
@@ -34,11 +37,11 @@ jobs:
         id: check_files
         uses: andstor/file-existence-action@v3
         with:
-          files: "~/README.md"
+          files: "README.md"
   
       - name: File exists
         run: |
-            if [ -f "~/README.md" ]; then
+            if [ -f "README.md" ]; then
                 echo "El archivo README.md existe en el directorio raíz."
             else
                 echo "El archivo README.md no existe en el directorio raíz."
